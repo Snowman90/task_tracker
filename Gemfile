@@ -44,7 +44,7 @@ end
 
 group :test do
   gem 'pronto'
-  gem 'pronto-rubocop'
+  gem 'pronto-rubocop', '~> 0.9.1'
   gem 'simplecov', require: false
 end
 
