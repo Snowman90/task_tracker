@@ -2,3 +2,7 @@
   <%= f.text_field :subject, placehoder: t('task.new.placeholder'), required: true %>
   <%= f.submit %>
 <% end %>
+
+<% @tasks.each do |task| %>
+  <%= task.subject %>
+<% end %>

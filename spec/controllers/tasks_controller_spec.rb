@@ -8,5 +8,14 @@ RSpec.describe TasksController, type: :controller do
       get :index
       expect(response).to have_http_status(:success)
     end
+
+    it 'fetch tasks' do
+      Task.create(subject: 'Oh hi!')
+
+      get :index
+
+      expect(assigns(:task)).to be_a_new(Task)
+      expect(assigns(:tasks)).to match_array(Task.all)
+    end
   end
 end
