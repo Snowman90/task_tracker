@@ -3,5 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/index.html.erb', type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'renders form' do
+    assign(:task, Task.new)
+
+    render
+
+    expect(rendered).to match(/<form/)
+  end
 end

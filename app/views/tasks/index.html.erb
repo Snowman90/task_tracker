@@ -1,2 +1,4 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<%= form_for @task do |f| %>
+  <%= f.text_field :subject, placehoder: t('task.new.placeholder'), required: true %>
+  <%= f.submit %>
+<% end %>
