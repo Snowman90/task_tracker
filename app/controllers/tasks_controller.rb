@@ -7,6 +7,10 @@ class TasksController < ApplicationController
     @tasks = Task.all
   end
 
+  def search
+    render json: Task.where('subject LIKE ?', "#{params[:query]}%").pluck(:subject)
+  end
+
   def create
     @task = Task.new(task_params)
 

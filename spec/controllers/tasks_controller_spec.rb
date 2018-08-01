@@ -27,4 +27,17 @@ RSpec.describe TasksController, type: :controller do
       expect(response).to have_http_status(:redirect)
     end
   end
+
+  describe 'GET #search' do
+    it 'searching by part of the subject' do
+      Task.create(subject: 'Pranie')
+      Task.create(subject: 'Prasowanie')
+      Task.create(subject: 'Hodor')
+
+      get :search, params: { query: 'Pra' }
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body)).to match_array(%w[Pranie Prasowanie])
+    end
+  end
 end
