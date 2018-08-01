@@ -25,3 +25,8 @@ bundle exec rspec
 ```bash
 bundle exec rubocop
 ```
+
+### Running tests and liters automatically with guard:
+```bash
+bundle exec guard
+```
