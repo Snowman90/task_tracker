@@ -1,0 +1,9 @@
+dist: trusty
+language: ruby
+rvm:
+  - 2.5.1
+before_script:
+  - rails db:migrate RAILS_ENV=test
+script:
+  - bundle exec rspec
+  - bundle exec pronto run -c=origin/master --exit-code
