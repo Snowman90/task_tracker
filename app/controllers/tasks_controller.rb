@@ -4,7 +4,7 @@
 class TasksController < ApplicationController
   def index
     @task = Task.new
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc)
   end
 
   def search
