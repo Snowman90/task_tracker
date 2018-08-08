@@ -28,6 +28,15 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe 'GET #edit' do
+    it 'edit task' do
+      task = Task.create(subject: 'sth')
+      get :edit, params: { id: task }
+      expect(response).to have_http_status(:success)
+      expect(assigns(:task)).to eq(task)
+    end
+  end
+
   describe 'GET #search' do
     it 'searching by part of the subject' do
       Task.create(subject: 'Pranie')
