@@ -18,7 +18,7 @@ class TasksController < ApplicationController
       redirect_to tasks_path
     else
       @tasks = Task.all
-      render action: :index
+      render action: :index, status: :unprocessable_entity
     end
   end
 
