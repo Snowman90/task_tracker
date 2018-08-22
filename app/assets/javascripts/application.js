@@ -16,6 +16,7 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+//= require_self
 
 $(function(){ $(document).foundation(); });
 
@@ -24,12 +25,18 @@ $(function(){
     var input = $(event.target)
     var query = input.val()
 
-    $.ajax({
-      method: "GET",
-      url: "/tasks/search",
-      data: { query: query }
+    // input = "/tasks/search?query="+query
+    input = new Request("/tasks/search?query="+query);
+
+    init = {
+      method: 'GET'
+    }
+
+    fetch(input)
+    .then(function(response) {
+      return response.json();
     })
-    .done(function( suggestions ) {
+    .then(function(suggestions) {
       var $suggestions = $('#suggestions')
       var $suggestions_table = $suggestions.find('table tbody')
 
@@ -41,6 +48,28 @@ $(function(){
 
       $suggestions.show()
     });
+
+    // ==================================================
+    // ================  jQuery version =================
+    // ==================================================
+
+    // $.ajax({
+    //   method: "GET",
+    //   url: "/tasks/search",
+    //   data: { query: query }
+    // })
+    // .done(function( suggestions ) {
+    //   var $suggestions = $('#suggestions')
+    //   var $suggestions_table = $suggestions.find('table tbody')
+
+    //   $suggestions_table.empty()
+
+    //   suggestions.forEach(function(suggestion) {
+    //     $suggestions_table.append('<tr><td>' + suggestion + '</td></tr>')
+    //   });
+
+    //   $suggestions.show()
+    // });
   })
 
   $('#suggestions table').on('click', function(event){
