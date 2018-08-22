@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'tasks/edit.html.erb', type: :view do
   it 'renders form' do
-    assign(:task, Task.create(subject: "sth"))
+    assign(:task, Task.create(subject: 'sth'))
 
     render
 

@@ -44,6 +44,16 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe 'DELETE #destroy' do
+    it 'deletes task' do
+      task = Task.create(subject: 'pranie')
+      expect do
+        delete :destroy, params: { id: task }
+      end.to change(Task, :count).by(-1)
+      expect(response).to be_successful
+    end
+  end
+
   describe 'GET #search' do
     it 'searching by part of the subject' do
       Task.create(subject: 'Pranie')
