@@ -47,10 +47,19 @@ RSpec.describe TasksController, type: :controller do
   describe 'DELETE #destroy' do
     it 'deletes task' do
       task = Task.create(subject: 'pranie')
+
+      expect do
+        delete :destroy, params: { id: task }, format: :json
+      end.to change(Task, :count).by(-1)
+      expect(response).to be_successful
+    end
+
+    it 'destroy task and redirects ' do
+      task = Task.create(subject: 'pranie')
       expect do
         delete :destroy, params: { id: task }
       end.to change(Task, :count).by(-1)
-      expect(response).to be_successful
+      expect(response).to have_http_status(:redirect)
     end
   end
 

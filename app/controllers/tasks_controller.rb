@@ -27,8 +27,16 @@ class TasksController < ApplicationController
   def edit; end
 
   def destroy
-    @task.destroy
-    head :ok
+    respond_to do |format|
+      if @task.destroy
+        format.html { redirect_to tasks_path, notice: 'User was successfully destroy.' }
+        format.js
+        format.json { render json: @task, status: :ok, location: @task }
+      else
+        format.html { render action: :index }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
