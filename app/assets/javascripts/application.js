@@ -28,15 +28,33 @@ $(function(){
     if(confirm('Are you sure?')) {
       var url = $(event.target).attr('href')
 
-      $.ajax({
-        method: "DELETE",
-        dataType: 'json',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        url: url
-      })
-      .done(function(  ) {
+
+      // ==================================================
+      // ================  axios version =================
+      // ==================================================
+      axios.defaults.headers.common = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+
+      axios.delete(url)
+      .then(function(  ) {
         $(event.target).closest('tr').remove()
       })
+
+      // ==================================================
+      // ================  jQuery version =================
+      // ==================================================
+
+      // $.ajax({
+      //   method: "DELETE",
+      //   dataType: 'json',
+      //   beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      //   url: url
+      // })
+      // .done(function(  ) {
+      //   $(event.target).closest('tr').remove()
+      // })
 
     }
 
