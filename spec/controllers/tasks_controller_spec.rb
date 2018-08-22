@@ -6,7 +6,7 @@ RSpec.describe TasksController, type: :controller do
   describe 'GET #index' do
     it 'returns http success' do
       get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to be_successful
     end
 
     it 'fetch tasks' do
@@ -39,7 +39,7 @@ RSpec.describe TasksController, type: :controller do
     it 'edit task' do
       task = Task.create(subject: 'sth')
       get :edit, params: { id: task }
-      expect(response).to have_http_status(:success)
+      expect(response).to be_successful
       expect(assigns(:task)).to eq(task)
     end
   end
@@ -71,7 +71,7 @@ RSpec.describe TasksController, type: :controller do
 
       get :search, params: { query: 'Pra' }
 
-      expect(response).to have_http_status(:success)
+      expect(response).to be_successful
       expect(JSON.parse(response.body)).to match_array(%w[Pranie Prasowanie])
     end
   end
