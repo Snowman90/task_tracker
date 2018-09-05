@@ -8,7 +8,7 @@ class RegistrationController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      session[:current_user_id] = user.id
+      RegistrationMailer.activate(user).deliver_later
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity

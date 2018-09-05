@@ -27,9 +27,18 @@ RSpec.describe RegistrationController, type: :controller do
 
     it 'creates user profile' do
       expect do
-        post :create, params: valid_params
-      end.to change(User, :count).by(1)
+        expect do
+          post :create, params: valid_params
+        end.to change(User, :count).by(1)
+      end.to change(ActionMailer::Base.deliveries, :count).by(1)
+
+      user = User.last
+      expect(user.active).to be_falsey
+      expect(session[:current_user_id]).to be_nil
       expect(response).to have_http_status(:redirect)
+
+      delivered_email = ActionMailer::Base.deliveries.last
+      assert_includes delivered_email.to, user.email
     end
 
     it 'checks password confirmation' do
