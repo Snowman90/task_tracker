@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_29_130059) do
+ActiveRecord::Schema.define(version: 2018_09_05_133554) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "subject"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 2018_08_29_130059) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: false
+    t.string "activation_token"
+    t.index ["activation_token"], name: "index_users_on_activation_token", unique: true
   end
 
 end

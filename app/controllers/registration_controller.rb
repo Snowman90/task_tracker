@@ -7,12 +7,20 @@ class RegistrationController < ApplicationController
 
   def create
     user = User.new(user_params)
+    user.activation_token = SecureRandom.uuid
     if user.save
-      session[:current_user_id] = user.id
+      RegistrationMailer.activate(user).deliver_later
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def activate
+    user = User.find_by!(activation_token: params[:activation_token])
+    user.activate!
+    session[:current_user_id] = user.id
+    redirect_to root_path
   end
 
   private
