@@ -48,4 +48,19 @@ RSpec.describe RegistrationController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
+
+  describe 'GET #activate' do
+    let(:user) { User.create(email: 'a@a.pl', password: 'asdasd123', activation_token: SecureRandom.uuid) }
+
+    it 'returns http success' do
+      expect(user).to be_persisted
+
+      get :activate, params: { activation_token: user.activation_token }
+
+      user.reload
+
+      expect(user.active).to be_truthy
+      expect(response).to have_http_status(:redirect)
+    end
+  end
 end

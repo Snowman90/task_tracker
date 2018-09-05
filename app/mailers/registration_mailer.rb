@@ -7,6 +7,7 @@ class RegistrationMailer < ApplicationMailer
   #   en.registration_mailer.activate.subject
   #
   def activate(user)
+    @activation_token = user.activation_token
     mail to: user.email
   end
 end
